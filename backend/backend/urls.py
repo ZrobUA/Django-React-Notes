@@ -15,8 +15,35 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, re_path
+
+from API.views import *
+from rest_framework import routers
+
+
+router = routers.SimpleRouter()
+router.register(r"note", NoteViewSet)
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    path("api/v1/", include(router.urls)),
+    path("api/v1/drf-auth/", include("rest_framework.urls")),
+    path("api/v1/auth/", include("djoser.urls")),
+    re_path(r"^auth/", include("djoser.urls.authtoken")),
 ]
+"""
+BASIC ENDPOINTS
+Authorization: Token 216te2fgt7f3g8goy
+http://127.0.0.1:8000/api/v1/auth/users/me/ DELETE current_password:3dfueniu      (delete user)
+http://127.0.0.1:8000/api/v1/auth/users/me/ GET                                   (get my account)
+http://127.0.0.1:8000/api/v1/auth/users/    GET                                   (get users)
+
+http://127.0.0.1:8000/api/v1/auth/users/    POST   username:sfewf password:sfefef (register new user)  optional email:fgegeg
+http://127.0.0.1:8000/auth/token/login/     POST   username:sfewf password:sfefef (login user)
+http://127.0.0.1:8000/auth/token/logout/    POST   username:sfewf password:sfefef (logout user)
+
+MORE
+https://djoser.readthedocs.io/en/latest/base_endpoints.html#
+
+"""
