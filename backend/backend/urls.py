@@ -33,7 +33,7 @@ urlpatterns = [
     re_path(r"^auth/", include("djoser.urls.authtoken")),
 ]
 """
-BASIC ENDPOINTS
+BASIC ENDPOINTS (Authentication)
 Authorization: Token 216te2fgt7f3g8goy
 http://127.0.0.1:8000/api/v1/auth/users/me/ DELETE current_password:3dfueniu      (delete user)
 http://127.0.0.1:8000/api/v1/auth/users/me/ GET                                   (get my account)
@@ -45,5 +45,13 @@ http://127.0.0.1:8000/auth/token/logout/    POST   username:sfewf password:sfefe
 
 MORE
 https://djoser.readthedocs.io/en/latest/base_endpoints.html#
+
+                (notes)
+Authorization: Token 216te2fgt7f3g8goy
+http://127.0.0.1:8000/api/v1/note/          GET                                   (get notes)
+http://127.0.0.1:8000/api/v1/note/1/        GET                                   (get note)
+http://127.0.0.1:8000/api/v1/note/          POST   text:fsfef category_text:s     (create note)
+http://127.0.0.1:8000/api/v1/note/1/        PUT    text:fsfef category_text:s     (edit note)
+http://127.0.0.1:8000/api/v1/note/1/        DELETE text:fsfef category_text:s     (delete note)
 
 """
