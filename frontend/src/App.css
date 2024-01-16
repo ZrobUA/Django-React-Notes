@@ -15,9 +15,31 @@
 .Sidebar {
     float: left;
     padding: 10px;
-    background: rgb(35 35 39);
+    background-color: rgb(35 35 39);
     height: 100vh; /* Встановлюємо висоту в 100% від верху до низу */
     width: 20%;
+}
+
+.Header {
+    background-color: rgb(39 39 39);
+    padding: 8px;
+}
+
+.Header button {
+    background-color:rgb(227 227 228);
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    resize: none;
+    color: rgb(0, 0, 0);
+    transition: 0.8s;
+}
+
+.Header button:hover {
+    background: transparent;
+    border-radius: 8px;
+    color: rgb(227 227 228);
+    transition: 1s;
 }
 
 .Sidebar-NotesList{

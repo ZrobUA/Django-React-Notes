@@ -38,10 +38,11 @@ Authorization: Token 216te2fgt7f3g8goy
 http://127.0.0.1:8000/api/v1/auth/users/me/ DELETE current_password:3dfueniu      (delete user)
 http://127.0.0.1:8000/api/v1/auth/users/me/ GET                                   (get my account)
 http://127.0.0.1:8000/api/v1/auth/users/    GET                                   (get users)
+http://127.0.0.1:8000/auth/token/logout/    POST   (logout user)
 
 http://127.0.0.1:8000/api/v1/auth/users/    POST   username:sfewf password:sfefef (register new user)  optional email:fgegeg
 http://127.0.0.1:8000/auth/token/login/     POST   username:sfewf password:sfefef (login user)
-http://127.0.0.1:8000/auth/token/logout/    POST   username:sfewf password:sfefef (logout user)
+
 
 MORE
 https://djoser.readthedocs.io/en/latest/base_endpoints.html#
