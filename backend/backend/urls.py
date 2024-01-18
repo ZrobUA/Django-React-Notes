@@ -23,6 +23,7 @@ from rest_framework import routers
 
 router = routers.SimpleRouter()
 router.register(r"note", NoteViewSet)
+router.register(r"category", CategoryViewSet)
 
 
 urlpatterns = [
@@ -31,14 +32,21 @@ urlpatterns = [
     path("api/v1/drf-auth/", include("rest_framework.urls")),
     path("api/v1/auth/", include("djoser.urls")),
     re_path(r"^auth/", include("djoser.urls.authtoken")),
+    path(
+        "api/v1/category/<int:pk>/notes/",
+        CategoryViewSet.as_view({"get": "notes"}),
+        name="category-notes",
+    ),
 ]
 """
 BASIC ENDPOINTS (Authentication)
 Authorization: Token 216te2fgt7f3g8goy
+
 http://127.0.0.1:8000/api/v1/auth/users/me/ DELETE current_password:3dfueniu      (delete user)
 http://127.0.0.1:8000/api/v1/auth/users/me/ GET                                   (get my account)
 http://127.0.0.1:8000/api/v1/auth/users/    GET                                   (get users)
-http://127.0.0.1:8000/auth/token/logout/    POST   (logout user)
+http://127.0.0.1:8000/auth/token/logout/    POST                                  (logout user)
+
 
 http://127.0.0.1:8000/api/v1/auth/users/    POST   username:sfewf password:sfefef (register new user)  optional email:fgegeg
 http://127.0.0.1:8000/auth/token/login/     POST   username:sfewf password:sfefef (login user)
@@ -49,10 +57,22 @@ https://djoser.readthedocs.io/en/latest/base_endpoints.html#
 
                 (notes)
 Authorization: Token 216te2fgt7f3g8goy
+
 http://127.0.0.1:8000/api/v1/note/          GET                                   (get notes)
 http://127.0.0.1:8000/api/v1/note/1/        GET                                   (get note)
 http://127.0.0.1:8000/api/v1/note/          POST   text:fsfef category_text:s     (create note)
 http://127.0.0.1:8000/api/v1/note/1/        PUT    text:fsfef category_text:s     (edit note)
-http://127.0.0.1:8000/api/v1/note/1/        DELETE text:fsfef category_text:s     (delete note)
+http://127.0.0.1:8000/api/v1/note/1/        DELETE                                (delete note)
+
+                (Categories)
+Authorization: Token 216te2fgt7f3g8goy
+
+http://127.0.0.1:8000/api/v1/category/      GET                                   (get categoryies)
+http://127.0.0.1:8000/api/v1/category/1/    GET                                   (get category)
+http://127.0.0.1:8000/api/v1/category/      POST   name:fsfef                     (create category)
+http://127.0.0.1:8000/api/v1/category/1/    PUT    name:fsfef                     (edit category)
+http://127.0.0.1:8000/api/v1/category/1/    DELETE                                (delete category)
+
+127.0.0.1:8000/api/v1/category/3/notes/     GET                                   (get notes by category)
 
 """

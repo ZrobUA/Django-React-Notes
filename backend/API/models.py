@@ -16,7 +16,11 @@ class Note(models.Model):
         max_length=100
     )  # Поле для текста категории, введенного пользователем
     category = models.ForeignKey(
-        Category, on_delete=models.PROTECT, null=True, blank=True
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="notes",
     )
 
     created = models.DateTimeField(auto_now_add=True)
@@ -34,3 +38,13 @@ class Note(models.Model):
         category, created = Category.objects.get_or_create(name=self.category_text)
         self.category = category
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+    # Проверяем, есть ли у заметки связанная категория
+        if self.category:
+            # Если у категории только одна заметка, удаляем и категорию
+            if Note.objects.filter(category=self.category).exclude(pk=self.pk).count() == 0:
+                self.category.delete()
+
+        super().delete(*args, **kwargs)
+

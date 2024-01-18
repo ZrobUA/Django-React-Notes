@@ -12,12 +12,21 @@
     font-size: 36px;
 }
 
+
 .Sidebar {
+    position: relative; /* Изменено свойство position */
     float: left;
     padding: 10px;
     background-color: rgb(35 35 39);
-    height: 100vh; /* Встановлюємо висоту в 100% від верху до низу */
+    height: 100vh;
     width: 20%;
+}
+
+.Sidebar-Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .Header {
@@ -60,7 +69,8 @@
 }
 
 .selected {
-    opacity: 60%;
+    opacity: 40%;
+    transition: 0.5s;
 }
 
 .Content textarea {
@@ -104,6 +114,7 @@
 
 .CreateNoteButton path {
     transition: 0.8s;
+    float: left;
 }
 
 .CreateNoteButton:hover {
@@ -113,4 +124,55 @@
 
 .CreateNoteButton:hover path {
     fill: black;
+}
+
+.dropdown-toggle {
+    background-color:rgb(227 227 228);
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    resize: none;
+    color: rgb(0, 0, 0);
+    transition: 0.8s;
+    float: right;
+    position: relative;
+}
+
+.dropdown-toggle:hover {
+    background: transparent;
+    border-radius: 8px;
+    color: rgb(227 227 228);
+    transition: 1s;
+}
+
+.CategoryDropdownMenu {
+    position: relative;
+    display: inline-block;
+    top: 100%; /* Помещаем меню под кнопкой */
+    left: 0;
+    z-index: 1;
+}
+
+.CategoryDropdownMenu-List {
+    overflow: auto;
+    box-shadow: 0px 8px 8px 8px rgba(0,0,0,0.6);
+    position: absolute;
+    overflow-y: auto;
+    max-height: 150px; /* Set your desired max height */
+    z-index: 1;
+    padding: 0;
+    top: 100%; 
+}
+
+.CategoryDropdownMenu-List li {
+    list-style: none;
+    padding: 8px;
+    background-color: rgb(35 35 39);
+    color: rgb(227 227 228);
+    cursor: pointer;
+}
+
+.CategoryDropdownMenu-List li:hover {
+    background-color: rgb(227 227 228);
+    color: black;
 }

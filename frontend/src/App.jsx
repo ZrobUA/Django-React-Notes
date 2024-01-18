@@ -11,8 +11,10 @@ import { useEffect, useState } from "react";
 function App() {
   const [token, setToken] = useState(localStorage.getItem("authToken"));
   const [notes, setNotes] = useState([]);
+  const [categories, setCategories] = useState([{name: "Categories"}]);
   const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [note, setNote] = useState({ text: "Nothing chosen!" });
+  const [selectedCategory, setSelectedCategory] = useState({ name: "Categories",});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const saveTokenToLocalStorage = (token) => {
@@ -77,6 +79,10 @@ function App() {
       .then((response) => {
         fetchNotes();
         setNote({ text: "Nothing chosen!" });
+        fetchCategories();
+        setSelectedCategory({
+          name: "Categories",
+        });
       })
       .catch((error) => {
         alert(error.message);
@@ -158,6 +164,40 @@ function App() {
     }
   };
 
+  const fetchCategories = async () => {
+    await axios
+      .get("http://127.0.0.1:8000/api/v1/category/", {
+        headers: {
+          Authorization: `Token ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        setCategories([]);
+        alert(error.message);
+      });
+  }
+
+  const fetchNotesByCategory = async (category) => {
+    await axios
+      .get(`http://127.0.0.1:8000/api/v1/category/${category.id}/notes/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setNotes(response.data);
+      })
+      .catch((error) => {
+        setNotes([]);
+        alert(error.message);
+      });
+  }
+
 
 
   useEffect(() => {
@@ -167,6 +207,7 @@ function App() {
       setToken(storedToken);
       setIsAuthenticated(true);
       fetchNotes();
+      fetchCategories();
     }
     // eslint-disable-next-line
   }, [token]);
@@ -180,6 +221,7 @@ function App() {
   const handleSaveChanges = (editedNote) => {
     setNote(editedNote);
     editNote(editedNote);
+    fetchCategories();
   };
 
   const handleDeleteNote = (editedNote) => {
@@ -188,6 +230,9 @@ function App() {
 
   const handleAddNewNote = () => {
     createNote();
+    setSelectedCategory({
+      name: "Categories",
+    });
   };
 
   const handleSubmitAuthForm = (Auth) => {
@@ -198,6 +243,18 @@ function App() {
     logout();
   };
 
+  const handleChooseCategory = (category) => { 
+    setSelectedCategory(category);
+    fetchNotesByCategory(category);
+  }
+
+  const handleShowAllNotes = () => { 
+    setSelectedCategory({
+      name: "Categories",
+    });
+    fetchNotes();
+  }
+
   return (
     <div className="App">
       <Header
@@ -207,9 +264,13 @@ function App() {
       />
       <Sidebar
         notes={notes}
+        categories={categories}
         selectedNoteId={selectedNoteId}
+        selectedCategory={selectedCategory}
         onNoteSelect={handleChooseNote}
         onAddNewNote={handleAddNewNote}
+        onChooseCategory={handleChooseCategory}
+        onShowAllNotes={handleShowAllNotes}
       />
       <Content
         note={note}

@@ -1,27 +1,35 @@
-import "./Sidebar.css";
-import NotesList from "./NotesList";
+import React from "react";
 import CreateNoteButton from "./CreateNoteButton";
-
+import CategoryDropdownMenu from "./CategoryDropdownMenu";
+import NotesList from "./NotesList";
 
 function Sidebar(props) {
-  const notes = props.notes;
-  const selectedNoteId = props.selectedNoteId;
-
-  const handleChooseNote = (note) => {
-    props.onNoteSelect(note);
-  };
-
-  const handleAddNewNote = () => {
-    props.onAddNewNote();
-  };
+  const {
+    notes,
+    selectedNoteId,
+    selectedCategory,
+    categories,
+    onNoteSelect,
+    onAddNewNote,
+    onChooseCategory,
+    onShowAllNotes,
+  } = props;
 
   return (
     <div className="Sidebar">
-      <CreateNoteButton onAddNewNote={handleAddNewNote} />
+      <div className="Sidebar-Header">
+        <CreateNoteButton onAddNewNote={onAddNewNote} />
+        <CategoryDropdownMenu
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onChooseCategory={onChooseCategory}
+          onShowAllNotes={onShowAllNotes}
+        />
+      </div>
       <NotesList
         notes={notes}
         selectedNoteId={selectedNoteId}
-        onNoteSelect={handleChooseNote}
+        onNoteSelect={onNoteSelect}
       />
     </div>
   );
