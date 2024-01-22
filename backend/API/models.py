@@ -40,10 +40,13 @@ class Note(models.Model):
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-    # Проверяем, есть ли у заметки связанная категория
+        # Проверяем, есть ли у заметки связанная категория
         if self.category:
             # Если у категории только одна заметка, удаляем и категорию
-            if Note.objects.filter(category=self.category).exclude(pk=self.pk).count() == 0:
+            if (
+                Note.objects.filter(category=self.category).exclude(pk=self.pk).count()
+                == 0
+            ):
                 self.category.delete()
 
         super().delete(*args, **kwargs)

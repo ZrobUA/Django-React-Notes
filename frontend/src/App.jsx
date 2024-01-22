@@ -16,6 +16,7 @@ function App() {
   const [note, setNote] = useState({ text: "Nothing chosen!" });
   const [selectedCategory, setSelectedCategory] = useState({ name: "Categories",});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showEditButtons, setShowEditButtons] = useState(false);
 
   const saveTokenToLocalStorage = (token) => {
     localStorage.setItem("authToken", token);
@@ -78,6 +79,7 @@ function App() {
       })
       .then((response) => {
         fetchNotes();
+        setShowEditButtons(false);
         setNote({ text: "Nothing chosen!" });
         fetchCategories();
         setSelectedCategory({
@@ -106,6 +108,7 @@ function App() {
       )
       .then((response) => {
         fetchNotes();
+        setShowEditButtons(true);
         setNote(response.data);
         setSelectedNoteId(response.data.id);
       })
@@ -133,6 +136,7 @@ function App() {
       saveTokenToLocalStorage(authToken);
       setToken(authToken);
       setIsAuthenticated(true);
+      setNote({text: 'Nothing chosen!'});
     } catch (error) {
       if (error.message === "Request failed with status code 400") {
         alert('Invalid login or password');
@@ -159,6 +163,10 @@ function App() {
       setIsAuthenticated(false);
       clearTokenFromLocalStorage();
       setNotes([]);
+      setNote({ text: "Firstly Login!" });
+      setSelectedNoteId(null);
+      setSelectedCategory({ name: "Categories" });
+      setShowEditButtons(false);
     } catch (error) {
       alert(error.message);
     }
@@ -198,6 +206,28 @@ function App() {
       });
   }
 
+  const fetchNotesBySearch = async (searchQuery) => {
+    await axios
+      .get(`http://127.0.0.1:8000/api/v1/notes/${searchQuery}/ `, {
+        headers: {
+          Authorization: `Token ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setNotes(response.data);
+        setNote({ text: "Nothing chosen!" });
+        
+        if (response.data.length === 0) {
+          setNote({ text: "Nothing find!" });
+        }
+      })
+      .catch((error) => {
+        setNotes([]);
+        alert(error.message);
+      });
+  }
+
 
 
   useEffect(() => {
@@ -214,6 +244,7 @@ function App() {
 
 
   function handleChooseNote(selectedNote) {
+    setShowEditButtons(true);
     setSelectedNoteId(selectedNote.id);
     setNote(selectedNote);
   }
@@ -255,12 +286,17 @@ function App() {
     fetchNotes();
   }
 
+  const handleSearch = (searchQuery) => { 
+    fetchNotesBySearch(searchQuery);
+  }
+
   return (
     <div className="App">
       <Header
         onSubmitSaveForm={handleSubmitAuthForm}
         isAuthenticated={isAuthenticated}
         onLogout={handleLogout}
+        onSearch={handleSearch}
       />
       <Sidebar
         notes={notes}
@@ -274,6 +310,7 @@ function App() {
       />
       <Content
         note={note}
+        showEditButtons={showEditButtons}
         onSaveChanges={handleSaveChanges}
         onDeleteNote={handleDeleteNote}
       />

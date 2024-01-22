@@ -29,14 +29,14 @@ function AuthForm(props) {
 
 
     return (
-      <form className="was-validated" onSubmit={handleSubmitAuthForm}>
+      <form className="was-validated AuthForm" onSubmit={handleSubmitAuthForm}>
         <div className="mb-3 mt-3">
           <label htmlFor="uname" className="form-label">
             Username:
           </label>
           <input
             type="text"
-            className="form-control"
+            className="AuthForm-Input"
             id="uname"
             placeholder="Enter username"
             name="uname"
@@ -53,7 +53,7 @@ function AuthForm(props) {
           </label>
           <input
             type="password"
-            className="form-control"
+            className="AuthForm-Input"
             id="pwd"
             placeholder="Enter password"
             name="pswd"

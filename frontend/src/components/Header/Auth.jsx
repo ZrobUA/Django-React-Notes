@@ -10,6 +10,7 @@ function Auth(props) {
     }, []);
 
     const handleAuth = () => {
+        props.onClickAuthButton();
         setAuthClick(!authClick);
     };
 
@@ -25,9 +26,9 @@ function Auth(props) {
 
     return (
         <div className="Auth">
-        <button onClick={isAuthenticated ? handleLogout : handleAuth}>
-            {isAuthenticated ? "Logout" : "Login"}
-        </button>
+            <button onClick={isAuthenticated ? handleLogout : handleAuth}>
+                {isAuthenticated ? "Logout" : "Login"}
+            </button>
         {authClick && <AuthForm onSubmitAuthForm={handleSubmitSaveForm} />}
         </div>
     );

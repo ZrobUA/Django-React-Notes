@@ -37,6 +37,7 @@ urlpatterns = [
         CategoryViewSet.as_view({"get": "notes"}),
         name="category-notes",
     ),
+    path("api/v1/notes/<str:query>/", search_notes, name="search_notes"),
 ]
 """
 BASIC ENDPOINTS (Authentication)
@@ -74,5 +75,6 @@ http://127.0.0.1:8000/api/v1/category/1/    PUT    name:fsfef                   
 http://127.0.0.1:8000/api/v1/category/1/    DELETE                                (delete category)
 
 127.0.0.1:8000/api/v1/category/3/notes/     GET                                   (get notes by category)
+127.0.0.1:8000/api/v1/notes/(noteText)/     GET                                   (get notes by note text)
 
 """

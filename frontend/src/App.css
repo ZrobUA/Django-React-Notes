@@ -32,9 +32,55 @@
 .Header {
     background-color: rgb(39 39 39);
     padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.Header button {
+.Search {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;  /* Центрируем содержимое */
+    align-items: center;
+}
+
+.Search.hidden {
+    display: none;
+}
+
+.Search input {
+    margin-right: 10px;  /* Добавьте отступ для разделения от кнопки */
+    width: 300px;
+    height: 26px;
+    border-radius: 8px;
+    border: none;
+    padding: 8px;
+}
+
+.SearchButton {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    resize: none;
+    margin: 8px;
+    transition: 1s;
+    padding: 2px;
+    padding-left: 4px;
+}
+
+.SearchButton:hover {
+    background-color: white;
+    fill: black;
+    transition: 1s;
+}
+
+.SearchButton:hover path {
+    fill: black;
+    transition: 1s;
+}
+
+.Auth button {
     background-color:rgb(227 227 228);
     border: none;
     border-radius: 8px;
@@ -44,11 +90,31 @@
     transition: 0.8s;
 }
 
-.Header button:hover {
+.Auth button:hover {
     background: transparent;
     border-radius: 8px;
     color: rgb(227 227 228);
     transition: 1s;
+}
+
+.AuthForm {
+    
+}
+
+.AuthForm-Input {
+    width: 600px;
+    display: block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .Sidebar-NotesList{
@@ -176,3 +242,4 @@
     background-color: rgb(227 227 228);
     color: black;
 }
+

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 
 function Content(props) {
     const [editedNote, setEditedNote] = useState(props.note);
+    const showEditButtons = props.showEditButtons
 
     useEffect(() => {
         setEditedNote(props.note);
@@ -38,8 +39,12 @@ function Content(props) {
     return (
         <div className="Content">
             <textarea value={editedNote.text} onChange={handleNoteChange} />
-            <button onClick={handleSave}>Сохранить</button>
-            <button onClick={handleDeleteNote}>Удалить</button>
+            {showEditButtons && (
+                <div>
+                    <button onClick={handleSave}>Сохранить</button>
+                    <button onClick={handleDeleteNote}>Удалить</button>
+                </div>
+            )}
         </div>
     );
 }
